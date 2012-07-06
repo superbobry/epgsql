@@ -36,6 +36,7 @@ encode(float8array, L) when is_list(L)      -> encode_array(float8, L);
 encode(chararray, L) when is_list(L)        -> encode_array(bpchar, L);
 encode(textarray, L) when is_list(L)        -> encode_array(text, L);
 encode(Type, L) when is_list(L)             -> encode(Type, list_to_binary(L));
+encode({unknown_type, _Oid}, <<_>>=Value)   -> Value;
 encode(_Type, _Value)                       -> {error, unsupported}.
 
 encode(null, _Any     )                     -> undefined;
