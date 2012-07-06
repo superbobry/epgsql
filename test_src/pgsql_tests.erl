@@ -745,17 +745,16 @@ check_type(Module, Type, In, Out, Values, Column) ->
                                end,
                                ok = Module:sync(C)
                        end,
-              lists:foreach(Insert, [null | Values])
+              lists:foreach(Insert, [undefined | Values])
       end).
 
-compare(_Type, null, null) -> true;
-compare(float4, V1, V2)    -> abs(V2 - V1) < 0.000001;
-compare(float8, V1, V2)    -> abs(V2 - V1) < 0.000000000000001;
+compare(float4, V1, V2) -> abs(V2 - V1) < 0.000001;
+compare(float8, V1, V2) -> abs(V2 - V1) < 0.000000000000001;
 compare(Type, V1 = {_, _, MS}, {D2, {H2, M2, S2}}) when Type == timestamp;
                                                         Type == timestamptz ->
     {D1, {H1, M1, S1}} = calendar:now_to_universal_time(V1),
     ({D1, H1, M1} =:= {D2, H2, M2}) and (abs(S1 + MS/1000000 - S2) < 0.000000000000001);
-compare(_Type, V1, V2)     -> V1 =:= V2.
+compare(_Type, V1, V2)  -> V1 =:= V2.
 
 %% flush mailbox
 flush() ->

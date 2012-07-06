@@ -8,7 +8,7 @@
 
 -define(datetime, (get(datetime_mod))).
 
-encode(_Any, null)                          -> <<-1:?int32>>;
+encode(_Any, undefined)                     -> <<-1:?int32>>;
 encode(bool, true)                          -> <<1:?int32, 1:1/big-signed-unit:8>>;
 encode(bool, false)                         -> <<1:?int32, 0:1/big-signed-unit:8>>;
 encode(int2, N)                             -> <<2:?int32, N:1/big-signed-unit:16>>;
@@ -38,6 +38,7 @@ encode(textarray, L) when is_list(L)        -> encode_array(text, L);
 encode(Type, L) when is_list(L)             -> encode(Type, list_to_binary(L));
 encode(_Type, _Value)                       -> {error, unsupported}.
 
+encode(null, _Any     )                     -> undefined;
 decode(bool, <<1:1/big-signed-unit:8>>)     -> true;
 decode(bool, <<0:1/big-signed-unit:8>>)     -> false;
 decode(bpchar, <<C:1/big-unsigned-unit:8>>) -> C;
