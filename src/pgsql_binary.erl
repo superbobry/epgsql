@@ -39,7 +39,6 @@ encode(Type, L) when is_list(L)             -> encode(Type, list_to_binary(L));
 encode({unknown_type, _Oid}, <<_>>=Value)   -> Value;
 encode(_Type, _Value)                       -> {error, unsupported}.
 
-encode(null, _Any     )                     -> undefined;
 decode(bool, <<1:1/big-signed-unit:8>>)     -> true;
 decode(bool, <<0:1/big-signed-unit:8>>)     -> false;
 decode(bpchar, <<C:1/big-unsigned-unit:8>>) -> C;
