@@ -98,7 +98,7 @@ decode_data(Columns, Bin) ->
 decode_data([], _Bin, Acc) ->
     list_to_tuple(lists:reverse(Acc));
 decode_data([_C | T], <<-1:?int32, Rest/binary>>, Acc) ->
-    decode_data(T, Rest, [null | Acc]);
+    decode_data(T, Rest, [undefined | Acc]);
 decode_data([C | T], <<Len:?int32, Value:Len/binary, Rest/binary>>, Acc) ->
     case C of
         #column{type = Type, format = 1}   -> Value2 = pgsql_binary:decode(Type, Value);

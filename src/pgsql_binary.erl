@@ -102,7 +102,7 @@ decode_array(Data, Type, [Len | T]) ->
 decode_elements(Rest, _Type, Acc, 0) ->
     {lists:reverse(Acc), Rest};
 decode_elements(<<-1:?int32, Rest/binary>>, Type, Acc, N) ->
-    decode_elements(Rest, Type, [null | Acc], N - 1);
+    decode_elements(Rest, Type, [undefined | Acc], N - 1);
 decode_elements(<<Len:?int32, Value:Len/binary, Rest/binary>>, Type, Acc, N) ->
     Value2 = decode(Type, Value),
     decode_elements(Rest, Type, [Value2 | Acc], N - 1).
@@ -110,7 +110,7 @@ decode_elements(<<Len:?int32, Value:Len/binary, Rest/binary>>, Type, Acc, N) ->
 decode_record(<<>>, Acc) ->
     lists:reverse(Acc);
 decode_record(<<_Type:?int32, -1:?int32, Rest/binary>>, Acc) ->
-    decode_record(Rest, [null | Acc]);
+    decode_record(Rest, [undefined | Acc]);
 decode_record(<<Type:?int32, Len:?int32, Value:Len/binary, Rest/binary>>, Acc) ->
     Value2 = decode(pgsql_types:oid2type(Type), Value),
     decode_record(Rest, [Value2 | Acc]).
