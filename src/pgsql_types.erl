@@ -86,7 +86,7 @@ oid2type(2283) -> anyelement;
 oid2type(2776) -> anynonarray;
 oid2type(2950) -> uuid;
 oid2type(3500) -> anyenum;
-oid2type(Oid)  -> error({unknown_oid, Oid}).
+oid2type(Oid)  -> {unknown_oid, Oid}.
 
 type2oid(boolean)               -> 16;
 type2oid(bytea)                 -> 17;
@@ -175,4 +175,4 @@ type2oid(anyelement)            -> 2283;
 type2oid(anynonarray)           -> 2776;
 type2oid(uuid)                  -> 2950;
 type2oid(anyenum)               -> 3500;
-type2oid(Type)                  -> error({unknown_type, Type}).
+type2oid(Type)                  -> {unknown_type, Type}.
