@@ -2,7 +2,7 @@
 
 -export([oid2type/1, type2oid/1]).
 
-oid2type(16)   -> bool;
+oid2type(16)   -> boolean;
 oid2type(17)   -> bytea;
 oid2type(18)   -> char;
 oid2type(19)   -> name;
@@ -44,6 +44,7 @@ oid2type(1005) -> int2array;
 oid2type(1007) -> int4array;
 oid2type(1009) -> textarray;
 oid2type(1014) -> chararray;
+oid2type(1015) -> varchararray;
 oid2type(1016) -> int8array;
 oid2type(1021) -> float4array;
 oid2type(1022) -> float8array;
@@ -83,17 +84,20 @@ oid2type(2281) -> internal;
 oid2type(2282) -> opaque;
 oid2type(2283) -> anyelement;
 oid2type(2776) -> anynonarray;
+oid2type(2950) -> uuid;
 oid2type(3500) -> anyenum;
-oid2type(Oid)  -> {unknown_oid, Oid}.
+oid2type(Oid)  -> error({unknown_oid, Oid}).
 
-type2oid(bool)                  -> 16;
+type2oid(boolean)               -> 16;
 type2oid(bytea)                 -> 17;
 type2oid(char)                  -> 18;
 type2oid(name)                  -> 19;
 type2oid(int8)                  -> 20;
+type2oid(bigint)                -> 20;
 type2oid(int2)                  -> 21;
 type2oid(int2vector)            -> 22;
 type2oid(int4)                  -> 23;
+type2oid(integer)               -> 23;
 type2oid(regproc)               -> 24;
 type2oid(text)                  -> 25;
 type2oid(oid)                   -> 26;
@@ -128,11 +132,13 @@ type2oid(int2array)             -> 1005;
 type2oid(int4array)             -> 1007;
 type2oid(textarray)             -> 1009;
 type2oid(chararray)             -> 1014;
+type2oid(varchararray)          -> 1015;
 type2oid(int8array)             -> 1016;
 type2oid(float4array)           -> 1021;
 type2oid(float8array)           -> 1022;
 type2oid(aclitem)               -> 1033;
 type2oid(cstringarray)          -> 1263;
+type2oid(character)             -> 1042;
 type2oid(bpchar)                -> 1042;
 type2oid(varchar)               -> 1043;
 type2oid(date)                  -> 1082;
@@ -167,5 +173,6 @@ type2oid(internal)              -> 2281;
 type2oid(opaque)                -> 2282;
 type2oid(anyelement)            -> 2283;
 type2oid(anynonarray)           -> 2776;
+type2oid(uuid)                  -> 2950;
 type2oid(anyenum)               -> 3500;
-type2oid(Type)                  -> {unknown_type, Type}.
+type2oid(Type)                  -> error({unknown_type, Type}).
